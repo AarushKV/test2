@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smiley Aura 3D</title>
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f9d423, #ff4e50, #1e90ff, #00ffcc);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .aura-wrapper {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      transform-style: preserve-3d;
+    }
+
+    .aura-layer {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      animation: pulse 2s infinite ease-in-out;
+      opacity: 0.7;
+    }
+
+    .aura-layer:nth-child(1) {
+      width: 120px;
+      height: 120px;
+      background: rgba(255, 0, 255, 0.4);
+    }
+
+    .aura-layer:nth-child(2) {
+      width: 160px;
+      height: 160px;
+      background: rgba(0, 255, 255, 0.3);
+    }
+
+    .aura-layer:nth-child(3) {
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 0, 0.2);
+    }
+
+    .aura-layer:nth-child(4) {
+      width: 240px;
+      height: 240px;
+      background: rgba(0, 255, 127, 0.2);
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.5);
+      }
+    }
+
+    .smiley-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 200px;
+      height: 200px;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+
+    .face {
+      background: radial-gradient(circle at 30% 30%, #ffff66, #ffcc00);
+      border: 4px solid #000;
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+    }
+
+    .eye {
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background-color: black;
+    }
+
+    .eye.left {
+      top: 30%;
+      left: 25%;
+    }
+
+    .eye.right {
+      top: 30%;
+      right: 25%;
+    }
+
+    .eye.blink {
+      animation: blink 0.2s ease-in-out forwards;
+    }
+
+    @keyframes blink {
+      0% { height: 25px; }
+      50% { height: 5px; }
+      100% { height: 25px; }
+    }
+
+    .mouth {
+      position: absolute;
+      bottom: 25%;
+      left: 25%;
+      width: 50%;
+      height: 30px;
+      border-bottom: 5px solid black;
+      border-radius: 0 0 50% 50%;
+    }
+  </style>
+</head>
+<body>
+  <div class="aura-wrapper">
+    <div class="aura-layer"></div>
+    <div class="aura-layer"></div>
+    <div class="aura-layer"></div>
+    <div class="aura-layer"></div>
+    <div class="smiley-container" id="smiley">
+      <div class="face">
+        <div class="eye left" id="eyeLeft"></div>
+        <div class="eye right" id="eyeRight"></div>
+        <div class="mouth"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const smiley = document.getElementById('smiley');
+    const eyeLeft = document.getElementById('eyeLeft');
+    const eyeRight = document.getElementById('eyeRight');
+
+    window.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+
+      eyeLeft.classList.add('blink');
+      eyeRight.classList.add('blink');
+
+      setTimeout(() => {
+        eyeLeft.classList.remove('blink');
+        eyeRight.classList.remove('blink');
+      }, 300);
+
+      smiley.style.transition = 'transform 0.5s ease-in-out';
+      smiley.style.transform = 'translate(-50%, -60%)';
+
+      setTimeout(() => {
+        smiley.style.transform = 'translate(-50%, -50%)';
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
